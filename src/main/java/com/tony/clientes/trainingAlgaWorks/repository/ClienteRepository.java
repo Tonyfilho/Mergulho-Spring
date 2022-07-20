@@ -1,6 +1,7 @@
 package com.tony.clientes.trainingAlgaWorks.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
   * Obs: Temos que usar camel Case como padrão no nome do Metodo, o Spring
    lista um padrão de nome possiveis Ex: findBy.... mais propriedade
  */
- ResponseEntity<Cliente> findByNome(String nome);
+ Optional<Cliente> findByNome(String nome);
 
  /**Criando um metodo de retorno do nome com o LIKE onde pode se conter  */
  List<Cliente> findByNomeContaining(String nome);

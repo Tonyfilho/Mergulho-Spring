@@ -9,8 +9,10 @@ import javax.persistence.EntityManager;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,11 +79,32 @@ public class ClienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id , @RequestBody Cliente cliente, HttpServletResponse response) {
-        Cliente clienteAtualizado = clienteService.atualizaClienteService(id, cliente);
-        return ResponseEntity.status(HttpStatus.OK).body(clienteAtualizado);
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id , @RequestBody Cliente cliente) {
+        // Cliente clienteAtualizado = clienteService.atualizaClienteService(id, cliente);
+        // return ResponseEntity.status(HttpStatus.OK).body(clienteAtualizado);
+        Optional<Cliente> clienteAtualizado = clienteRepositories.findById(id);
+        if (clienteAtualizado.isPresent()) {                
+            cliente.setId(id);   /**Atribuindo o mesmo Id o JPA  forçar uma atualização */
+            clienteRepositories.save(cliente);
+            return ResponseEntity.ok(cliente);            
+        }        
+         return  ResponseEntity.notFound().build();
 
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCliente(@PathVariable Long id , @RequestBody Cliente cliente) {
+      
+        Optional<Cliente> clienteAtualizado = clienteRepositories.findById(id);
+        if (clienteAtualizado.isPresent()) {                
+            cliente.setId(id);   /**Atribuindo o mesmo Id o JPA  forçar uma atualização */
+            clienteRepositories.delete(cliente);
+            return ResponseEntity.noContent().build();            
+        }        
+         return  ResponseEntity.notFound().build();
+
+    }
+
+
 
    
 

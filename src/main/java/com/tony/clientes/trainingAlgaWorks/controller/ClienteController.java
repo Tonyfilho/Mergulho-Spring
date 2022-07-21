@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 // import javax.validation.Valid;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
@@ -72,14 +73,14 @@ public class ClienteController {
     /**Faz um Post na DB e retorna 1 cliente */
 
     @PostMapping()
-    public ResponseEntity<Cliente> criarCliente( @RequestBody Cliente cliente, HttpServletResponse response) {
+    public ResponseEntity<Cliente> criarCliente( @RequestBody @Valid Cliente cliente, HttpServletResponse response) {
         Cliente clienteSalvo = clienteRepositories.save(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id , @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id , @RequestBody @Valid Cliente cliente) {
         // Cliente clienteAtualizado = clienteService.atualizaClienteService(id, cliente);
         // return ResponseEntity.status(HttpStatus.OK).body(clienteAtualizado);
         Optional<Cliente> clienteAtualizado = clienteRepositories.findById(id);

@@ -22,6 +22,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
  List<Cliente> findByNomeContaining(String nome);
 
 
-
+/**criando um metodo para saber se ja existe ou não um email cadastrado,  retorna um Optional com algo ou nada */
+Optional<Cliente>  findByEmail(String email);
     
 }

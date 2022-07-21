@@ -39,7 +39,6 @@ public class ClienteController {
      */
 
     ClienteRepository clienteRepositories;
-
     ClienteService clienteService;
 
     @GetMapping()
@@ -72,7 +71,7 @@ public class ClienteController {
 
     @PostMapping()
     public ResponseEntity<Cliente> criarCliente( @RequestBody @Valid Cliente cliente, HttpServletResponse response) {
-        Cliente clienteSalvo = clienteRepositories.save(cliente);
+        Cliente clienteSalvo =  clienteService.saveCliente(cliente);
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
 
     }
@@ -84,7 +83,7 @@ public class ClienteController {
         Optional<Cliente> clienteAtualizado = clienteRepositories.findById(id);
         if (clienteAtualizado.isPresent()) {                
             cliente.setId(id);   /**Atribuindo o mesmo Id o JPA  forçar uma atualização */
-            clienteRepositories.save(cliente);
+            clienteService.saveCliente(cliente);
             return ResponseEntity.ok(cliente);            
         }        
          return  ResponseEntity.notFound().build();
@@ -96,7 +95,7 @@ public class ClienteController {
         Optional<Cliente> clienteAtualizado = clienteRepositories.findById(id);
         if (clienteAtualizado.isPresent()) {                
             cliente.setId(id);   /**Atribuindo o mesmo Id o JPA  forçar uma atualização */
-            clienteRepositories.delete(cliente);
+            clienteService.deleteCliente(id);
             return ResponseEntity.noContent().build();            
         }        
          return  ResponseEntity.notFound().build();

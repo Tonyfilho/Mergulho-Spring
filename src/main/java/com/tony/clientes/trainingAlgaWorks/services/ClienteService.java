@@ -1,19 +1,19 @@
 package com.tony.clientes.trainingAlgaWorks.services;
 
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
 import com.tony.clientes.trainingAlgaWorks.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
 
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+@AllArgsConstructor //com lombok n precisamo usar @Autowired
 public class ClienteService {
 
   ClienteRepository clienteRepository;
@@ -23,11 +23,8 @@ public class ClienteService {
  * @return
  */
 public Cliente  getClienteById(Long id) {
-//    return clienteRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+  //  return clienteRepository.findById(id).isPresent() ? ResponseEntity.ok(clienteRepository.findById(id).get()): ResponseEntity.notFound().build();
   return clienteRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException("404 Resource not found or not exist", 1));
-//  return clienteRepository.findById(id).isPresent() ? ResponseEntity.ok(clienteRepository.findById(id).get()): ResponseEntity.notFound().build();
-  
-
     
 }
 
@@ -37,6 +34,26 @@ public Cliente atualizaClienteService(Long id, Cliente cliente) {
     return clienteRepository.save(clienteAtualizado);
 }
 
-
-    
+//metodo para salvar
+@Transactional /*faz com q a class tenha preferencia em sua transações e persistencia com a DB, caso haja Erros aqui, nada será salvo na DB*/
+public Cliente saveCliente(Cliente cliente) {
+  /****************************************Criando regra para Não salvar email duplicados */
+ // boolean emailAlreadyUsed =   clienteRepository.findByEmail(cliente.getEmail()).isPresent();
+ /**Ou usar a Api de Stream do JAVA com lambda, ou seja o se email q temo na DB for diferente do email
+  * que estamos recebendo então podemos cadastrar
+  */
+  boolean emailAlreadyUsed =   clienteRepository.findByEmail(cliente.getEmail())
+  .stream().anyMatch(emailExistente -> !emailExistente.equals(cliente) );
+   if (emailAlreadyUsed) {
+     throw new BusinessException("Email already exist ");
+   }
+   return clienteRepository.save(cliente);
 }
+
+//metodo para exluir q é void
+@Transactional
+public void deleteCliente(Long id) {
+  clienteRepository.deleteById(id);
+}
+    
+}// end class

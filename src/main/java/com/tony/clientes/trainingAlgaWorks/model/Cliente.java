@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) //por ser o ID q será comparado,t emos q tb por a anotação @EqualsAndHashCode.Include
 
 public class Cliente {
+    @NotNull
     @EqualsAndHashCode.Include // esta é a anotação de exclusividade do Equals and HashCode, pois se o ID for Iqual o Objeto será true, sem a necessidade de verificar o restante
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

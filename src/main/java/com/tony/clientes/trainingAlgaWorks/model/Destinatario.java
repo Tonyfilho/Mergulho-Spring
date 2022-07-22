@@ -23,5 +23,5 @@ public class Destinatario {
     private String complemento;
     
     @Column(name = "destinatario_bairro")
-   private String bairro;
+    private String bairro;
 }

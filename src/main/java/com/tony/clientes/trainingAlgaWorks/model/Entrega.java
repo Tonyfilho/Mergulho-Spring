@@ -14,9 +14,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.tony.clientes.trainingAlgaWorks._validationGroups.ValidationGroups.CustomClienteID;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,47 +38,43 @@ public class Entrega {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-  
-    @Valid // usa-se em Relacionamentos de Entidade com Entidades para q o @NotNUll da entidade Cliente veja funcionar.
-    @ManyToOne //criando a relação via objeto com cliente ou seja foreingKey do modelo Relacional
+    @Valid // usa-se em Relacionamentos de Entidade com Entidades para q o @NotNUll da
+           // entidade Cliente veja funcionar.
+    @ConvertGroup(from = Default.class, to = CustomClienteID.class) /*
+                                                                     * usa-se para falar com spring q temos um custom
+                                                                     * Bean validation. Por ter
+                                                                     * relacionamento isto diz para spring ignorar
+                                                                     * os @NotNull da entidade e usar um
+                                                                     * customisada. e convertemos o Default.class para o
+                                                                     * CustomClienteID com este Bean criado.
+                                                                     * O CustomClienteID.class.
+                                                                     */
+    @ManyToOne // criando a relação via objeto com cliente ou seja foreingKey do modelo
+               // Relacional
     @NotNull
     private Cliente cliente;
 
-    @Embedded  
+    @Embedded
     private Destinatario destinatario;
 
     @NotNull
     private BigDecimal taxa;
-    
-    /**Conta esta anotação o POSTMAN não consegue enviar dados
-     *   e os mesmo são SETADOS no service*/
+
+    /**
+     * Conta esta anotação o POSTMAN não consegue enviar dados
+     * e os mesmo são SETADOS no service
+     */
     @JsonProperty(access = Access.READ_ONLY)
-    @Column(name="status")
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private StatusEntrega  statusEntrega;
-    
-    
-    
+    private StatusEntrega statusEntrega;
+
     @JsonProperty(access = Access.READ_ONLY)
-    @Column(name="data_pedido")
+    @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
-    
-    
+
     @JsonProperty(access = Access.READ_ONLY)
-    @Column(name="data_finalizado")
+    @Column(name = "data_finalizado")
     private LocalDateTime datafinalizacao;
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
 }

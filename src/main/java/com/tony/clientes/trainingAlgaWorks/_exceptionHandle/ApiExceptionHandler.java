@@ -2,6 +2,7 @@ package com.tony.clientes.trainingAlgaWorks._exceptionHandle;
 
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             field.add(new MessageException.Field(fieldErrorName, fieldErrorMessage));
         }
 
-        MessageException messageException = new MessageException(status.value(), LocalDateTime.now(),
+        MessageException messageException = new MessageException(status.value(), OffsetDateTime.now(),
                 "One or more The field are empty, one or more fields  are Mandatory", field);
         return handleExceptionInternal(ex, messageException, headers, status, request);
     }
@@ -53,7 +54,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        MessageException messageException = new MessageException(status.value(), LocalDateTime.now(),
+        MessageException messageException = new MessageException(status.value(), OffsetDateTime.now(),
         ex.getMessage(), null);
         return handleExceptionInternal(ex, messageException, new HttpHeaders(), status, request);
 

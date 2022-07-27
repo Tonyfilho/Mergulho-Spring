@@ -1,6 +1,7 @@
 package com.tony.clientes.trainingAlgaWorks.services;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public class EntregaService {
 
 
     
-    private Cliente hasIdCliente(Entrega entrega) {
+    private Cliente hasCliente(Entrega entrega) {
         /**
          * fazendo uma busca e uma validação e lancando um erro caso o ID da class Cliente Não
          * existir o findByid é OPTIONAL ele fornece o metodo ORELSETHROW q for passado lança um Erro
@@ -33,6 +34,11 @@ public class EntregaService {
         Cliente cliente = clienteRepository.findById(entrega.getCliente().getId())
         .orElseThrow(() -> new BusinessException("Client Id doesnt in DB"));
         return cliente;
+    }
+    private Entrega hasId(Long id) {      
+        Entrega entrega = entregaRepository.findById(id)
+        .orElseThrow(() -> new BusinessException("Entrega Id doesnt in DB"));
+        return  entrega;
     }
 
     @Transactional
@@ -48,9 +54,9 @@ public class EntregaService {
          * aqui Ex: Hora e entrega, Status da entrega etc
          */
         entrega.setStatusEntrega(StatusEntrega.PENDENTE);
-        entrega.setDataPedido(LocalDateTime.now());
+        entrega.setDataPedido(OffsetDateTime.now());
 
-        Cliente cliente = hasIdCliente(entrega);
+        Cliente cliente = hasCliente(entrega);
         /**
          * Caso exista tb o cliente, ja podemos RETORNA-LO de forma que aparecerá
          * as informações SETANDO A VAR ENTREGA.setCliente, de forma q ja aparecerá
@@ -58,6 +64,11 @@ public class EntregaService {
          */
          entrega.setCliente(cliente);
         return entregaRepository.save(entrega);
+    }
+
+    public Entrega getUmaEntrega(Long id) {
+        Entrega entregaExiste = hasId(id);
+      return  entregaExiste;
     }
 
 

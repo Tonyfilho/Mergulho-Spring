@@ -2,6 +2,7 @@ package com.tony.clientes.trainingAlgaWorks.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -21,17 +22,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.tony.clientes.trainingAlgaWorks._validationGroups.ValidationGroups.CustomClienteID;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+// @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Entrega {
+
+    
+   
 
     @EqualsAndHashCode.Include
     @Id
@@ -55,6 +58,8 @@ public class Entrega {
     private Cliente cliente;
 
     @Embedded
+    @Valid
+    @NotNull
     private Destinatario destinatario;
 
     @NotNull
@@ -71,10 +76,10 @@ public class Entrega {
 
     @JsonProperty(access = Access.READ_ONLY)
     @Column(name = "data_pedido")
-    private LocalDateTime dataPedido;
+    private OffsetDateTime dataPedido;
 
     @JsonProperty(access = Access.READ_ONLY)
     @Column(name = "data_finalizado")
-    private LocalDateTime datafinalizacao;
+    private OffsetDateTime datafinalizacao;
 
 }

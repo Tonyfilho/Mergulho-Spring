@@ -1,6 +1,6 @@
 package com.tony.clientes.trainingAlgaWorks._exceptionHandle;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +17,7 @@ import lombok.Setter;
 public class MessageException {
     
     private Integer status; // para retornar o numero do Status
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
     private String titulo; // para retornar a descrição  de erro
     private List<Field> field;
     

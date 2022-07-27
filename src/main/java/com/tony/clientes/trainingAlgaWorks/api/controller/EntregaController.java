@@ -31,8 +31,6 @@ public class EntregaController {
     EntregaService entregaService;
     EntregaRepository entregaRepository;
 
-    
-
     /** Pedir um entrega */
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED) /*
@@ -52,8 +50,8 @@ public class EntregaController {
     }
 
     @GetMapping()
-    public List<Entrega> listarTodasEntregas() {
-        return entregaRepository.findAll();
+    public List<EntregaModelDTO> listarTodasEntregas() {
+        return entregaService.modelMapperListDeEntrega(entregaRepository.findAll());
     }
 
     /**************************************************
@@ -79,18 +77,21 @@ public class EntregaController {
      * }
      */
 
-     /*
-      * Criaremos dentro do nosso Service o conversor de Entidade para DTO, recebe um entidade entrega e devolve entregaModelDTO.
-      */
+    /*
+     * Criaremos dentro do nosso Service o conversor de Entidade para DTO, recebe um
+     * entidade entrega e devolve entregaModelDTO.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<EntregaModelDTO> listaUmaentrega(@PathVariable Long id) {
         return entregaRepository.findById(id)
-                /******Forma reduzida */
-              /*  .map(entrega -> {
-                    EntregaModelDTO entregaModelDTO = entregaService.modelMapperDTO(entrega);
-                    return ResponseEntity.ok(entregaModelDTO);
-                }).orElse(ResponseEntity.notFound().build());*/ 
-                .map(entrega -> {                  
+                /****** Forma reduzida */
+                /*
+                 * .map(entrega -> {
+                 * EntregaModelDTO entregaModelDTO = entregaService.modelMapperDTO(entrega);
+                 * return ResponseEntity.ok(entregaModelDTO);
+                 * }).orElse(ResponseEntity.notFound().build());
+                 */
+                .map(entrega -> {
                     return ResponseEntity.ok(entregaService.modelMapperDTODeEntrega(entrega));
                 }).orElse(ResponseEntity.notFound().build());
     }

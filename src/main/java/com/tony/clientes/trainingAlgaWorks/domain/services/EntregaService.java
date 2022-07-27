@@ -2,6 +2,8 @@ package com.tony.clientes.trainingAlgaWorks.domain.services;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.modelmapper.ModelMapper;
@@ -92,9 +94,20 @@ public class EntregaService {
         return entregaModelDTO;
     }
 
-public List<EntregaModelDTO> modelMapperListDeEntrega() {
-    List<EntregaModelDTO> entregaListaDTO = modelMapper.map(entregaRepository.findAll(), EntregaModelDTO.class);
-    return entregaListaDTO;
-}
+    public List<EntregaModelDTO> modelMapperListDeEntrega(List<Entrega> entregas) {
+        /*
+         * 1º Recebo a lista de entrega q vira do FindALL()
+         * 2º converto em Stream e Uso Map que aplica uma função em todos elemento da
+         * Stream e retorna um outro resultado.
+         * 3º Como paramentro do Usaremos o MetaReference passando o
+         * this::this::modelMapperDTODeEntrega
+         * que transforma em 1 stream de entrega p 1 stream de EntregaModelDTO.
+         * 4º Temos q retornar uma lista, Usando o Collect para transformar novamente um
+         * uma Lista
+         */
+        return entregas.stream()
+                .map(this::modelMapperDTODeEntrega)
+                .collect(Collectors.toList());
+    }
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tony.clientes.trainingAlgaWorks.api.model.EntregaModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.repository.EntregaRepository;
 import com.tony.clientes.trainingAlgaWorks.services.EntregaService;
@@ -29,6 +31,7 @@ public class EntregaController {
 
     EntregaService entregaService;
     EntregaRepository entregaRepository;
+    ModelMapper modelMapper;
 
     /** Pedir um entrega */
     @PostMapping()
@@ -48,12 +51,12 @@ public class EntregaController {
         return entregaService.getEntrega(entrega);
     }
 
-    @GetMapping()    
+    @GetMapping()
     public List<Entrega> listarTodasEntregas() {
         return entregaRepository.findAll();
     }
 
-    /*
+    /**************************************************OBS******************
      * @GetMapping("/{id}")
      * 
      * @ResponseStatus(HttpStatus.OK)
@@ -61,10 +64,26 @@ public class EntregaController {
      * return entregaService.getUmaEntrega(id);
      * }
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Entrega> listaUmaentrega(@PathVariable Long id) {
-        return entregaRepository.findById(id)
-        .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
 
+    /******************************************************OBS****************
+     * Como passamos a usar TDOs usaremos outro GetMapping("/{id}")
+     * listaUmaentrega(), retornando convertendo de entrega to entregaModelDTO
+     * 
+     * @GetMapping("/{id}")
+     * public ResponseEntity<Entrega> listaUmaentrega(@PathVariable Long id) {
+     * return entregaRepository.findById(id)
+     * .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+     * }
+     */
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EntregaModelDTO> listaUmaentrega(@PathVariable Long id) {
+        return entregaRepository.findById(id)
+                .map(entrega ->  {
+                  EntregaModelDTO entregaModelDTO = modelMapper.map(entrega, EntregaModelDTO.class);
+
+
+                return ResponseEntity.ok(entregaModelDTO)
+                }).orElse(ResponseEntity.notFound().build());
+    }
 }

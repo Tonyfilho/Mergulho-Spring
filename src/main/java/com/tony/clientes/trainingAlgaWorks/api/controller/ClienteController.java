@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.controller;
+package com.tony.clientes.trainingAlgaWorks.api.controller;
 
 
 import java.util.List;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tony.clientes.trainingAlgaWorks.model.Cliente;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
 import com.tony.clientes.trainingAlgaWorks.services.ClienteService;
 

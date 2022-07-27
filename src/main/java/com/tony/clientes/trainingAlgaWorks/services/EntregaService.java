@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
-import com.tony.clientes.trainingAlgaWorks.model.Cliente;
-import com.tony.clientes.trainingAlgaWorks.model.Entrega;
-import com.tony.clientes.trainingAlgaWorks.model.StatusEntrega;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
+import com.tony.clientes.trainingAlgaWorks.domain.model.StatusEntrega;
 import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
 import com.tony.clientes.trainingAlgaWorks.repository.EntregaRepository;
 

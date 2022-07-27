@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.model;
+package com.tony.clientes.trainingAlgaWorks.domain.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

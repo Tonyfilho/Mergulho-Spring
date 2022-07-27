@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
-import com.tony.clientes.trainingAlgaWorks.model.Cliente;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
 
 import lombok.AllArgsConstructor;

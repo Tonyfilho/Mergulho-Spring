@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.model;
+package com.tony.clientes.trainingAlgaWorks.domain.model;
 
 
 public enum StatusEntrega {

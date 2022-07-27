@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
-import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
-import com.tony.clientes.trainingAlgaWorks.services.ClienteService;
+import com.tony.clientes.trainingAlgaWorks.domain.repository.ClienteRepository;
+import com.tony.clientes.trainingAlgaWorks.domain.services.ClienteService;
 
 import lombok.AllArgsConstructor;
 

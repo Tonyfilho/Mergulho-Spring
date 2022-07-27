@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tony.clientes.trainingAlgaWorks.api.model.EntregaModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
-import com.tony.clientes.trainingAlgaWorks.repository.EntregaRepository;
-import com.tony.clientes.trainingAlgaWorks.services.EntregaService;
+import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
+import com.tony.clientes.trainingAlgaWorks.domain.services.EntregaService;
 
 import lombok.AllArgsConstructor;
 
@@ -31,23 +30,24 @@ public class EntregaController {
 
     EntregaService entregaService;
     EntregaRepository entregaRepository;
-    ModelMapper modelMapper;
+
+    
 
     /** Pedir um entrega */
     @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    /*
-     * Quando o BeanValidator for fz a validação do @Valid na Entidade Entrega, por
-     * padrão ele usará Default.class Ex: @NotBlank, @NotNull
-     * mas quando chegar lá no relacionamento @ManyToOne com a entidade Cliente, ele
-     * encontrará a anotação @Valid e @ConvertGroup(from = Default.class, to =
-     * CustomClienteID.class). E esta anotação @Convert..irá falar para Não se
-     * preoculpe com as outras validações da entidade Cliente, pois a propria
-     * entidade cliente validará isto com o BeanValidator mas somente com a
-     * Validação que CUSTOMISAMOS, que neste caso é a @NotNull(groups =
-     * ValidationGroups.CustomClienteID.class)
-     */
-    public Entrega solicitarEntrega(@Valid @RequestBody Entrega entrega) {
+    @ResponseStatus(HttpStatus.CREATED) /*
+                                         * Quando o BeanValidator for fz a validação do @Valid na Entidade Entrega, por
+                                         * padrão ele usará Default.class Ex: @NotBlank, @NotNull
+                                         * mas quando chegar lá no relacionamento @ManyToOne com a entidade Cliente, ele
+                                         * encontrará a anotação @Valid e @ConvertGroup(from = Default.class, to =
+                                         * CustomClienteID.class). E esta anotação @Convert..irá falar para Não se
+                                         * preoculpe com as outras validações da entidade Cliente, pois a propria
+                                         * entidade cliente validará isto com o BeanValidator mas somente com a
+                                         * Validação que CUSTOMISAMOS, que neste caso é a @NotNull(groups =
+                                         * ValidationGroups.CustomClienteID.class)
+                                         */
+
+    public EntregaModelDTO solicitarEntrega(@Valid @RequestBody Entrega entrega) {
         return entregaService.getEntrega(entrega);
     }
 
@@ -56,16 +56,19 @@ public class EntregaController {
         return entregaRepository.findAll();
     }
 
-    /**************************************************OBS******************
+    /**************************************************
+     * OBS******************
      * @GetMapping("/{id}")
      * 
      * @ResponseStatus(HttpStatus.OK)
-     * public Entrega listaUmaentrega(@PathVariable Long id ) {
-     * return entregaService.getUmaEntrega(id);
-     * }
+     *                                public Entrega listaUmaentrega(@PathVariable
+     *                                Long id ) {
+     *                                return entregaService.getUmaEntrega(id);
+     *                                }
      */
 
-    /******************************************************OBS****************
+    /******************************************************
+     * OBS****************
      * Como passamos a usar TDOs usaremos outro GetMapping("/{id}")
      * listaUmaentrega(), retornando convertendo de entrega to entregaModelDTO
      * 
@@ -76,14 +79,19 @@ public class EntregaController {
      * }
      */
 
+     /*
+      * Criaremos dentro do nosso Service o conversor de Entidade para DTO, recebe um entidade entrega e devolve entregaModelDTO.
+      */
     @GetMapping("/{id}")
     public ResponseEntity<EntregaModelDTO> listaUmaentrega(@PathVariable Long id) {
         return entregaRepository.findById(id)
-                .map(entrega ->  {
-                  EntregaModelDTO entregaModelDTO = modelMapper.map(entrega, EntregaModelDTO.class);
-
-
-                return ResponseEntity.ok(entregaModelDTO)
+                /******Forma reduzida */
+              /*  .map(entrega -> {
+                    EntregaModelDTO entregaModelDTO = entregaService.modelMapperDTO(entrega);
+                    return ResponseEntity.ok(entregaModelDTO);
+                }).orElse(ResponseEntity.notFound().build());*/ 
+                .map(entrega -> {                  
+                    return ResponseEntity.ok(entregaService.modelMapperDTODeEntrega(entrega));
                 }).orElse(ResponseEntity.notFound().build());
     }
 }

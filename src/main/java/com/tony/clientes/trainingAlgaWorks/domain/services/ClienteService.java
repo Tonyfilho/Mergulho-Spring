@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.services;
+package com.tony.clientes.trainingAlgaWorks.domain.services;
 
 
 import org.springframework.beans.BeanUtils;
@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
-import com.tony.clientes.trainingAlgaWorks.repository.ClienteRepository;
+import com.tony.clientes.trainingAlgaWorks.domain.repository.ClienteRepository;
 
 import lombok.AllArgsConstructor;
 

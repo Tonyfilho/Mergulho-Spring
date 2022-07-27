@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.repository;
+package com.tony.clientes.trainingAlgaWorks.domain.repository;
 
 import java.util.List;
 import java.util.Optional;

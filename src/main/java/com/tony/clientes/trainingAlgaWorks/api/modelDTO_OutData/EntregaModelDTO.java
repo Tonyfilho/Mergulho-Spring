@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.api.model;
+package com.tony.clientes.trainingAlgaWorks.api.modelDTO_OutData;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -11,7 +11,8 @@ import lombok.Setter;
 /*Esta Classe é o DTO da classe Entrega, usamos este padrão por segurança Não 
   expor a nossa ENTIDADE
  * Desta forma poderemos tb formatar os dados, ao invez de passar todas os atributos com o todos 
- * os atributos de Cliente que temos em Entrega, podemos passar uma string onde um construtor receba os dados do Objeto Cliente 
+ * os atributos de Cliente que temos em Entrega, podemos passar uma string onde um construtor
+ *  receba os dados do Objeto Cliente , ou um Classe chamada Cliente.
  * e formate em um padrão somente nomeCliente onde ja recebe cliente { nome,  email, telefone} 
  * da mesma forma o o DestinatarioMOdel q ao invez de mandar o Objeto do Destinario receberemos uma 
  */
@@ -19,12 +20,11 @@ import lombok.Setter;
 @Setter
 public class EntregaModelDTO {
 
-
-    private Long id;
-    private String nomeCliente;
-    private DestinatarioModelDTO destinatario;
-    private BigDecimal taxa;
-    private StatusEntrega status;
-    private OffsetDateTime dataPedido;
-    private OffsetDateTime dataFinalizacao;
+  private Long id;
+  private ClienteModelDTO cliente;
+  private DestinatarioModelDTO destinatario;
+  private BigDecimal taxa;
+  private StatusEntrega status;
+  private OffsetDateTime dataPedido;
+  private OffsetDateTime dataFinalizacao;
 }

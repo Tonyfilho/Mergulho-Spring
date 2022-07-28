@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.api.model;
+package com.tony.clientes.trainingAlgaWorks.api.modelDTO_OutData;
 /*
  * Esta Classe é o DTO da classe Entrega, usamos este padrão por segurança Não 
   expor a nossa ENTIDADE

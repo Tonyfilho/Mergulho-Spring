@@ -10,7 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
-import com.tony.clientes.trainingAlgaWorks.api.model.EntregaModelDTO;
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO_OutData.EntregaModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.model.StatusEntrega;

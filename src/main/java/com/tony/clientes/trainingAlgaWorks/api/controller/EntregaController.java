@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tony.clientes.trainingAlgaWorks.api.model.EntregaModelDTO;
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO_OutData.EntregaModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
 import com.tony.clientes.trainingAlgaWorks.domain.services.EntregaService;

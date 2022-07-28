@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DestinatarioModelDTO {
+public class DestinatarioOutputModelDTO {
 
     private String nome;
     private String logradouro;

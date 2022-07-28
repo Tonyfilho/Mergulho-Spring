@@ -10,7 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
-import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaModelDTO;
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.model.StatusEntrega;
@@ -55,7 +55,7 @@ public class EntregaService {
     }
 
     @Transactional
-    public EntregaModelDTO getEntrega(Entrega entrega) {
+    public EntregaOutputModelDTO getEntrega(Entrega entrega) {
         /**
          * É aqui neste espaço q são implementada as regras de negocio, Ex:
          * Horario de entrega.
@@ -85,16 +85,16 @@ public class EntregaService {
         return entregaExiste;
     }
 
-    public EntregaModelDTO modelMapperDTODeEntrega(Object entrega) {/*
+    public EntregaOutputModelDTO modelMapperDTODeEntrega(Object entrega) {/*
                                                                      * Este Metodo recebe uma Entidade Entrega e retorna
                                                                      * o DTO
                                                                      * entrega usando a biblioteca ModelMapper.
                                                                      */
-        EntregaModelDTO entregaModelDTO = modelMapper.map(entrega, EntregaModelDTO.class);
+        EntregaOutputModelDTO entregaModelDTO = modelMapper.map(entrega, EntregaOutputModelDTO.class);
         return entregaModelDTO;
     }
 
-    public List<EntregaModelDTO> modelMapperListDeEntrega(List<Entrega> entregas) {
+    public List<EntregaOutputModelDTO> modelMapperListDeEntrega(List<Entrega> entregas) {
         /*
          * 1º Recebo a lista de entrega q vira do FindALL()
          * 2º converto em Stream e Uso Map que aplica uma função em todos elemento da

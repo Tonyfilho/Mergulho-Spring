@@ -18,11 +18,11 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class EntregaModelDTO {
+public class EntregaOutputModelDTO {
 
   private Long id;
-  private ClienteModelDTO cliente;
-  private DestinatarioModelDTO destinatario;
+  private ClienteOutputModelDTO cliente;
+  private DestinatarioOutputModelDTO destinatario;
   private BigDecimal taxa;
   private StatusEntrega status;
   private OffsetDateTime dataPedido;

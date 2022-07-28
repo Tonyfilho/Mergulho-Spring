@@ -56,7 +56,8 @@ public class EntregaService {
     }
 
     @Transactional
-    public EntregaInputModelDTO postEntrega(Entrega entrega) {
+    public EntregaOutputModelDTO postEntrega(EntregaInputModelDTO entregaInputModelDTO) {
+         Entrega entrega = toDtoToEntity(entregaInputModelDTO);
         /**
          * É aqui neste espaço q são implementada as regras de negocio, Ex:
          * Horario de entrega.
@@ -78,7 +79,8 @@ public class EntregaService {
          */
         entrega.setCliente(cliente);
         entregaRepository.save(entrega);
-        return modelMapperDTODeEntrega(entrega);
+
+        return toEntityToDto(entrega);
     }
 
     public Entrega getUmaEntrega(Long id) {
@@ -86,7 +88,7 @@ public class EntregaService {
         return entregaExiste;
     }
 
-    public EntregaOutputModelDTO modelMapperDTODeEntrega(Object entrega) {/*
+    public EntregaOutputModelDTO toEntityToDto(Object entrega) {/*
                                                                            * Este Metodo recebe uma Entidade Entrega e
                                                                            * retorna
                                                                            * o DTO
@@ -108,7 +110,7 @@ public class EntregaService {
          * uma Lista
          */
         return entregas.stream()
-                .map(this::modelMapperDTODeEntrega)
+                .map(this::toEntityToDto)
                 .collect(Collectors.toList());
     }
 
@@ -116,7 +118,8 @@ public class EntregaService {
      * **********************************INPUTDTO************************
      * A conversão agora é ao contrario, de um ModelDTO para uma ENIDADE
      */
-    public Entrega toEntity(EntregaInputModelDTO entregaInputDTO) {
-        return modelMapper.map(entregaInputDTO, Entrega.class);
+    public Entrega toDtoToEntity(EntregaInputModelDTO entregaInputModelDTO) {
+        Entrega entrega = modelMapper.map(entregaInputModelDTO, Entrega.class);
+        return  entrega;
     }
 }

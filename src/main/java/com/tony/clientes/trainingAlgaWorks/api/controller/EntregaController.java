@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutputModelDTO;
-import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
 import com.tony.clientes.trainingAlgaWorks.domain.services.EntregaService;
 
@@ -47,14 +45,12 @@ public class EntregaController {
                                          * ValidationGroups.CustomClienteID.class)
                                          */
 
-    public EntregaInputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entrega) {/*
+    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody  EntregaInputModelDTO entregaInputModelDTO) {/*
                                                                                          * Mudaremos a Entidade Entrega
                                                                                          * que é o Paramentro para
                                                                                          * EntregaInputDto , desta forma passaremos o DTO no lugar da Entidade
                                                                                          */
-        //  return entregaService.postEntrega(entregaService.toEntity(entrega));
-         return entregaService.toEntity(entrega);
-        
+        return entregaService.postEntrega(entregaInputModelDTO);
     }
 
     @GetMapping()
@@ -100,7 +96,7 @@ public class EntregaController {
                  * }).orElse(ResponseEntity.notFound().build());
                  */
                 .map(entrega -> {
-                    return ResponseEntity.ok(entregaService.modelMapperDTODeEntrega(entrega));
+                    return ResponseEntity.ok(entregaService.toEntityToDto(entrega));
                 }).orElse(ResponseEntity.notFound().build());
     }
 }

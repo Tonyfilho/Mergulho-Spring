@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.tony.clientes.trainingAlgaWorks._exceptionHandle.BusinessException;
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Cliente;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
@@ -55,7 +56,7 @@ public class EntregaService {
     }
 
     @Transactional
-    public EntregaOutputModelDTO getEntrega(Entrega entrega) {
+    public EntregaInputModelDTO postEntrega(Entrega entrega) {
         /**
          * É aqui neste espaço q são implementada as regras de negocio, Ex:
          * Horario de entrega.
@@ -86,10 +87,11 @@ public class EntregaService {
     }
 
     public EntregaOutputModelDTO modelMapperDTODeEntrega(Object entrega) {/*
-                                                                     * Este Metodo recebe uma Entidade Entrega e retorna
-                                                                     * o DTO
-                                                                     * entrega usando a biblioteca ModelMapper.
-                                                                     */
+                                                                           * Este Metodo recebe uma Entidade Entrega e
+                                                                           * retorna
+                                                                           * o DTO
+                                                                           * entrega usando a biblioteca ModelMapper.
+                                                                           */
         EntregaOutputModelDTO entregaModelDTO = modelMapper.map(entrega, EntregaOutputModelDTO.class);
         return entregaModelDTO;
     }
@@ -110,4 +112,11 @@ public class EntregaService {
                 .collect(Collectors.toList());
     }
 
+    /**********************************
+     * **********************************INPUTDTO************************
+     * A conversão agora é ao contrario, de um ModelDTO para uma ENIDADE
+     */
+    public Entrega toEntity(EntregaInputModelDTO entregaInputDTO) {
+        return modelMapper.map(entregaInputDTO, Entrega.class);
+    }
 }

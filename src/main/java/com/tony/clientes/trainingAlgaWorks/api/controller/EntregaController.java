@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputDTO;
+import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
@@ -45,8 +47,14 @@ public class EntregaController {
                                          * ValidationGroups.CustomClienteID.class)
                                          */
 
-    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody Entrega entrega) {
-        return entregaService.getEntrega(entrega);
+    public EntregaInputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entrega) {/*
+                                                                                         * Mudaremos a Entidade Entrega
+                                                                                         * que é o Paramentro para
+                                                                                         * EntregaInputDto , desta forma passaremos o DTO no lugar da Entidade
+                                                                                         */
+        //  return entregaService.postEntrega(entregaService.toEntity(entrega));
+         return entregaService.toEntity(entrega);
+        
     }
 
     @GetMapping()

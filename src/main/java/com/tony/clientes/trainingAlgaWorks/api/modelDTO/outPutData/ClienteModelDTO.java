@@ -1,4 +1,4 @@
-package com.tony.clientes.trainingAlgaWorks.api.modelDTO_OutData;
+package com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData;
 
 import lombok.Getter;
 import lombok.Setter;

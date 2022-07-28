@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.EntregaInputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutputModelDTO;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
 import com.tony.clientes.trainingAlgaWorks.domain.services.EntregaService;
 
@@ -45,12 +46,33 @@ public class EntregaController {
                                          * ValidationGroups.CustomClienteID.class)
                                          */
 
-    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody  EntregaInputModelDTO entregaInputModelDTO) {/*
-                                                                                         * Mudaremos a Entidade Entrega
-                                                                                         * que é o Paramentro para
-                                                                                         * EntregaInputDto , desta forma passaremos o DTO no lugar da Entidade
-                                                                                         */
-        return entregaService.postEntrega(entregaInputModelDTO);
+    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entregaInputModelDTO) {/*
+                                                                                                                   * Mudaremos
+                                                                                                                   * a
+                                                                                                                   * Entidade
+                                                                                                                   * Entrega
+                                                                                                                   * que
+                                                                                                                   * é o
+                                                                                                                   * Paramentro
+                                                                                                                   * para
+                                                                                                                   * EntregaInputDto
+                                                                                                                   * ,
+                                                                                                                   * desta
+                                                                                                                   * forma
+                                                                                                                   * passaremos
+                                                                                                                   * o
+                                                                                                                   * DTO
+                                                                                                                   * no
+                                                                                                                   * lugar
+                                                                                                                   * da
+                                                                                                                   * Entidade
+                                                                                                                   */
+        Entrega novaEntrega = entregaService.toDtoToEntity(entregaInputModelDTO);
+     
+        Entrega entregaDTO = entregaService.postEntrega(novaEntrega);
+        return entregaService.toEntityToDto(entregaDTO);
+
+        // return entregaService.postEntrega(entregaInputModelDTO);
     }
 
     @GetMapping()

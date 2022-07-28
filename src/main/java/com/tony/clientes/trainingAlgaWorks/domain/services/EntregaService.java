@@ -56,8 +56,10 @@ public class EntregaService {
     }
 
     @Transactional
-    public EntregaOutputModelDTO postEntrega(EntregaInputModelDTO entregaInputModelDTO) {
-         Entrega entrega = toDtoToEntity(entregaInputModelDTO);
+    public Entrega postEntrega(Entrega entrega) {
+        // System.out.println("********************************************************************************");
+        // System.out.println(entrega.getCliente().getId());
+        //  Entrega entrega = toDtoToEntity(entregaInputModelDTO);
         /**
          * É aqui neste espaço q são implementada as regras de negocio, Ex:
          * Horario de entrega.
@@ -78,9 +80,9 @@ public class EntregaService {
          * todas as informações do cliente e não mais o retorno das propriedade vazias.
          */
         entrega.setCliente(cliente);
-        entregaRepository.save(entrega);
+      return  entregaRepository.save(entrega);
 
-        return toEntityToDto(entrega);
+        // return toEntityToDto(entrega);
     }
 
     public Entrega getUmaEntrega(Long id) {

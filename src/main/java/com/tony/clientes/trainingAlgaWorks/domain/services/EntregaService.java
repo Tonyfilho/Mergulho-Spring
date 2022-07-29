@@ -2,7 +2,6 @@ package com.tony.clientes.trainingAlgaWorks.domain.services;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +48,7 @@ public class EntregaService {
         return cliente;
     }
 
-    private Entrega hasId(Long id) {
+    private Entrega hasIdCliente(Long id) {
         Entrega entrega = entregaRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Entrega Id doesnt in DB"));
         return entrega;
@@ -86,7 +85,7 @@ public class EntregaService {
     }
 
     public Entrega getUmaEntrega(Long id) {
-        Entrega entregaExiste = hasId(id);
+        Entrega entregaExiste = hasIdCliente(id);
         return entregaExiste;
     }
 

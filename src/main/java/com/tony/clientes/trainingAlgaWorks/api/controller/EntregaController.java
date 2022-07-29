@@ -46,33 +46,14 @@ public class EntregaController {
                                          * ValidationGroups.CustomClienteID.class)
                                          */
 
-    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entregaInputModelDTO) {/*
-                                                                                                                   * Mudaremos
-                                                                                                                   * a
-                                                                                                                   * Entidade
-                                                                                                                   * Entrega
-                                                                                                                   * que
-                                                                                                                   * é o
-                                                                                                                   * Paramentro
-                                                                                                                   * para
-                                                                                                                   * EntregaInputDto
-                                                                                                                   * ,
-                                                                                                                   * desta
-                                                                                                                   * forma
-                                                                                                                   * passaremos
-                                                                                                                   * o
-                                                                                                                   * DTO
-                                                                                                                   * no
-                                                                                                                   * lugar
-                                                                                                                   * da
-                                                                                                                   * Entidade
-                                                                                                                   */
+    public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entregaInputModelDTO) { /*
+        Mudaremos a Entidade Entrega que é o Paramentro para EntregaInputDto,  desta  forma passaremos  o  DTO  no lugar  da Entidade  */
         Entrega novaEntrega = entregaService.toDtoToEntity(entregaInputModelDTO);
-     
+
         Entrega entregaDTO = entregaService.postEntrega(novaEntrega);
         return entregaService.toEntityToDto(entregaDTO);
 
-        // return entregaService.postEntrega(entregaInputModelDTO);
+   
     }
 
     @GetMapping()

@@ -1,8 +1,9 @@
 package com.tony.clientes.trainingAlgaWorks.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
@@ -32,9 +34,6 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Entrega {
-
-    
-   
 
     @EqualsAndHashCode.Include
     @Id
@@ -81,5 +80,37 @@ public class Entrega {
     @JsonProperty(access = Access.READ_ONLY)
     @Column(name = "data_finalizado")
     private OffsetDateTime datafinalizacao;
+
+    /*
+     * Faremos o mapeamento inverso, pois lá em emcorrencia temo ManyToOne, ou seja
+     * Entrega receberá uma Lista de ocorrencia.
+     * Obs: Temos q iniciar a lista vazia, mas tem q ser inicializada iqual no
+     * angular.
+     * 
+     */
+    @OneToMany(mappedBy = "entrega") /*
+                                      * Temos que adcionar uma propriedade que Mapea a Dona da relação, do lado
+                                      * Inverso, temos que dar no nome do atributo que manda os dados
+                                      */
+    private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+    public Ocorrencia AdcionarOcorrenciaDescricao(String descricao) { /*
+                                                                       * Criando para ser usando lá em OcorrenciaService
+                                                                       * 1º Cria uma instacia da Classe Ocorrencia
+                                                                       * 2º Seta o valor para a correncia
+                                                                       * 3º Setar a data de registro,
+                                                                       * 4º Setar a entrega usando o THIS da classe,
+                                                                       * 5º setar o Atributo Local ocorrencia, passando
+                                                                       * a var(...) como paramentro.
+                                                                       * 6º retorna a ocorrencia
+                                                                       */
+        Ocorrencia ocorrencia = new Ocorrencia();
+        ocorrencia.setDescricao(descricao);
+        ocorrencia.setDataRegistro(OffsetDateTime.now());
+        ocorrencia.setEntrega(this);
+        this.getOcorrencias().add(ocorrencia);
+
+        return ocorrencia;
+    }
 
 }

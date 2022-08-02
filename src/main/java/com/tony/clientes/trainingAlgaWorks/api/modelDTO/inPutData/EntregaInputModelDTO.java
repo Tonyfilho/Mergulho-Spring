@@ -18,13 +18,13 @@ public class EntregaInputModelDTO { /*
                                      */
     @Valid
     @NotNull
-    private ClienteIdInput clienteId; /*
+    private ClienteIdInputModelDTO clienteId; /*
                                        * 1º no cliente, só precisamo do ID, pois é um referencia e não um cadastro de
                                        * um cliente, pois o cliente já foi cadastrado.
                                        */
     @Valid
     @NotNull
-    private DestinatarioInput destinatario; /* 2º um Objeto do Destinatário */
+    private DestinatarioInputModelDTO destinatario; /* 2º um Objeto do Destinatário */
     
     @NotNull
     private  BigDecimal taxa;

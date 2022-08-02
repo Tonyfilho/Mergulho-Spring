@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class DestinatarioInput { /* Serão no mesmo Atributos da Classe Entrega */
+public class DestinatarioInputModelDTO { /* Serão no mesmo Atributos da Classe Entrega */
     @NotBlank
     private String nome;
 

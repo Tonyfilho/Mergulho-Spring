@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -88,10 +89,17 @@ public class Entrega {
      * angular.
      * 
      */
-    @OneToMany(mappedBy = "entrega") /*
-                                      * Temos que adcionar uma propriedade que Mapea a Dona da relação, do lado
-                                      * Inverso, temos que dar no nome do atributo que manda os dados
-                                      */
+    @OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL) /*
+                                                                 * Temos que adcionar uma propriedade que Mapea a Dona
+                                                                 * da relação, do lado
+                                                                 * Inverso, temos que dar no nome do atributo que manda
+                                                                 * os dados.
+                                                                 * Obs: temos Q por a propriedade cascade =
+                                                                 * CascadeType.ALL,
+                                                                 * sem isto o JakataPersistem não salva na DB, Quando
+                                                                 * criamos uma Nova instancia
+                                                                 * do Objeto OCORRENCIA, será feito a atualização na DB.
+                                                                 */
     private List<Ocorrencia> ocorrencias = new ArrayList<>();
 
     public Ocorrencia AdcionarOcorrenciaDescricao(String descricao) { /*

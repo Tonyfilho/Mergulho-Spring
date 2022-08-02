@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.inPutData.OcorrenciaInputModelDTO;
 import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.OcorrenciaOutPutModelDTO;
+import com.tony.clientes.trainingAlgaWorks.domain.model.Ocorrencia;
 import com.tony.clientes.trainingAlgaWorks.domain.services.OcorrenciaService;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +34,11 @@ public class OcorrenciaController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public OcorrenciaOutPutModelDTO registrar(@PathVariable Long entregaId,
             @Valid @RequestBody OcorrenciaInputModelDTO entregaDescricao) {
-        return ocorrenciaService.registrarOcorrenciaDeEntrega(entregaId, entregaDescricao.getDescricao());
+        OcorrenciaOutPutModelDTO ocorrenciaOutPutModelDTO;
+        Ocorrencia ocorrenciaRegistrada = ocorrenciaService.registrarOcorrenciaDeEntrega(entregaId,
+                entregaDescricao.getDescricao());
+        ocorrenciaOutPutModelDTO = ocorrenciaService.entityToModelDTO(ocorrenciaRegistrada);
+        return ocorrenciaOutPutModelDTO;
     }
 
 }

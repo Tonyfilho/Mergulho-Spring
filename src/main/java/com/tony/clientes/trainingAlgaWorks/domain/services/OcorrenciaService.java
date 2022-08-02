@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class OcorrenciaSevice {
+public class OcorrenciaService {
 
     EntregaRepository entregaRepository;
 

@@ -1,7 +1,6 @@
 package com.tony.clientes.trainingAlgaWorks._exceptionHandle;
 
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +53,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
    @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        MessageException messageException = new MessageException(status.value(), OffsetDateTime.now(),
+        ex.getMessage(), null);
+        return handleExceptionInternal(ex, messageException, new HttpHeaders(), status, request);
+
+    }
+    /**Criamos esta Exception p/ retornar 404 quando Passar lá no PostMan um ID que não existe localhost:8080/entrega/200/ocorrencias */
+   @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(BusinessException ex, WebRequest request) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
         MessageException messageException = new MessageException(status.value(), OffsetDateTime.now(),
         ex.getMessage(), null);
         return handleExceptionInternal(ex, messageException, new HttpHeaders(), status, request);

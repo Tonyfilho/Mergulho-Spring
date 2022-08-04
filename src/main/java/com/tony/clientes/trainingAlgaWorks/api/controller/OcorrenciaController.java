@@ -71,7 +71,7 @@ public class OcorrenciaController {
 
         Entrega entregaExistente = entregaService.getUmaEntrega(entregaId);
         List<Ocorrencia> listaDeOcorrencia = entregaExistente.getOcorrencias();
-       List< OcorrenciaOutPutModelDTO> ocorrenciaModelDTO = ocorrenciaService.listEntityToListModelDTO(listaDeOcorrencia);
+       List<OcorrenciaOutPutModelDTO> ocorrenciaModelDTO = ocorrenciaService.listEntityToListModelDTO(listaDeOcorrencia);
         return ocorrenciaModelDTO;
 
     }

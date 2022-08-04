@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.tony.clientes.trainingAlgaWorks.api.modelDTO.outPutData.EntregaOutput
 import com.tony.clientes.trainingAlgaWorks.domain.model.Entrega;
 import com.tony.clientes.trainingAlgaWorks.domain.repository.EntregaRepository;
 import com.tony.clientes.trainingAlgaWorks.domain.services.EntregaService;
+import com.tony.clientes.trainingAlgaWorks.domain.services.FinalizacaoDeEntregaService;
 
 import lombok.AllArgsConstructor;
 
@@ -29,8 +31,9 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/entregas")
 public class EntregaController {
 
-    EntregaService entregaService;
-    EntregaRepository entregaRepository;
+   private EntregaService entregaService;   
+   private EntregaRepository entregaRepository;
+   private FinalizacaoDeEntregaService finalizacaoDeEntrega;
 
     /** Pedir um entrega */
     @PostMapping()
@@ -47,13 +50,31 @@ public class EntregaController {
                                          */
 
     public EntregaOutputModelDTO solicitarEntrega(@Valid @RequestBody EntregaInputModelDTO entregaInputModelDTO) { /*
-        Mudaremos a Entidade Entrega que é o Paramentro para EntregaInputDto,  desta  forma passaremos  o  DTO  no lugar  da Entidade  */
+                                                                                                                    * Mudaremos
+                                                                                                                    * a
+                                                                                                                    * Entidade
+                                                                                                                    * Entrega
+                                                                                                                    * que
+                                                                                                                    * é
+                                                                                                                    * o
+                                                                                                                    * Paramentro
+                                                                                                                    * para
+                                                                                                                    * EntregaInputDto,
+                                                                                                                    * desta
+                                                                                                                    * forma
+                                                                                                                    * passaremos
+                                                                                                                    * o
+                                                                                                                    * DTO
+                                                                                                                    * no
+                                                                                                                    * lugar
+                                                                                                                    * da
+                                                                                                                    * Entidade
+                                                                                                                    */
         Entrega novaEntrega = entregaService.toDtoToEntity(entregaInputModelDTO);
 
         Entrega entregaDTO = entregaService.postEntrega(novaEntrega);
         return entregaService.toEntityToDto(entregaDTO);
 
-   
     }
 
     @GetMapping()
@@ -88,18 +109,35 @@ public class EntregaController {
      * Criaremos dentro do nosso Service o conversor de Entidade para DTO, recebe um
      * entidade entrega e devolve entregaModelDTO.
      */
+    /****** Forma reduzida */
     @GetMapping("/{id}")
-    public ResponseEntity<EntregaOutputModelDTO> listaUmaentrega(@PathVariable Long id) {
+    public ResponseEntity<EntregaOutputModelDTO> listaUmaentrega(@PathVariable Long id) { /*
+                                                                                           * .map(entrega -> {
+                                                                                           * EntregaModelDTO
+                                                                                           * entregaModelDTO =
+                                                                                           * entregaService.
+                                                                                           * modelMapperDTO(entrega);
+                                                                                           * return ResponseEntity.ok(
+                                                                                           * entregaModelDTO);
+                                                                                           * }).orElse(ResponseEntity.
+                                                                                           * notFound().build());
+                                                                                           */
+
         return entregaRepository.findById(id)
-                /****** Forma reduzida */
-                /*
-                 * .map(entrega -> {
-                 * EntregaModelDTO entregaModelDTO = entregaService.modelMapperDTO(entrega);
-                 * return ResponseEntity.ok(entregaModelDTO);
-                 * }).orElse(ResponseEntity.notFound().build());
-                 */
+
                 .map(entrega -> {
                     return ResponseEntity.ok(entregaService.toEntityToDto(entrega));
                 }).orElse(ResponseEntity.notFound().build());
     }
-}
+    
+    @PutMapping("/{entregaId}/finalizacao")
+    @ResponseStatus(HttpStatus.NO_CONTENT) /*O codigo será 204, que diz: Sucesso mas sem retorno */
+    public void finalizaUmaEntrega(@PathVariable Long entregaId) { /*
+                                                                    * Por ser uma finalização de entrega, basta fazer um
+                                                                    * PUT no status
+                                                                    */
+     finalizacaoDeEntrega.finalizaEntrega(entregaId);
+
+
+    }
+}// endClass

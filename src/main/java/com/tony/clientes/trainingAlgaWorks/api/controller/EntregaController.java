@@ -133,10 +133,20 @@ public class EntregaController {
     @PutMapping("/{entregaId}/finalizacao")
     @ResponseStatus(HttpStatus.NO_CONTENT) /*O codigo será 204, que diz: Sucesso mas sem retorno */
     public void finalizaUmaEntrega(@PathVariable Long entregaId) { /*
-                                                                    * Por ser uma finalização de entrega, basta fazer um
+                                                                    * Por ser uma finalização de entrega o que chamamos de NOCRUD, basta fazer um
                                                                     * PUT no status
                                                                     */
      finalizacaoDeEntrega.finalizaEntrega(entregaId);
+
+
+    }
+    @PutMapping("/{entregaId}/cancela")
+    @ResponseStatus(HttpStatus.NO_CONTENT) /*O codigo será 204, que diz: Sucesso mas sem retorno */
+    public void cancelaUmaEntrega(@PathVariable Long entregaId) { /*
+                                                                    * Por ser um cacelamento de entrega, o que chamamos de NOCRUD, basta fazer um
+                                                                    * PUT no status
+                                                                    */
+     finalizacaoDeEntrega.cancelaEntrega(entregaId);
 
 
     }

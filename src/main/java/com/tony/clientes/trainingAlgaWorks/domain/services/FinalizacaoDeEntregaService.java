@@ -25,17 +25,17 @@ public class FinalizacaoDeEntregaService {
                                                    * 2º Optei em Não por REGRAS de Negocio na Entidade, por isto foi
                                                    * criado o Metodo Finaliza.
                                                    */
-        Entrega entrega = entregaService.getUmaEntrega(entregaId);
-        entregaRepository.save(this.finaliza(entrega));
+        Entrega entregaConfirmada = entregaService.getUmaEntrega(entregaId);
+        Entrega entrega = this.finaliza(entregaConfirmada);
+        entregaRepository.save(entrega);
     }
 
-    private Entrega finaliza(Entrega entregaFinalizada) {
-        Entrega entrega = new Entrega();
-        if (!entrega.getStatusEntrega().equals(entregaFinalizada.getStatusEntrega())) {
+    private Entrega finaliza(Entrega entregaFinalizada) {       
+        if (!entregaFinalizada.getStatusEntrega().equals(StatusEntrega.PENDENTE)) {
             throw new BusinessException("Delivery can not be done !");
         }
-        entrega.setStatusEntrega(StatusEntrega.FINALIZADA);
-        entrega.setDatafinalizacao(OffsetDateTime.now());
-        return entrega;
+        entregaFinalizada.setStatusEntrega(StatusEntrega.FINALIZADA);
+        entregaFinalizada.setDatafinalizacao(OffsetDateTime.now());
+        return entregaFinalizada;
     }
 }

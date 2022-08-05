@@ -66,8 +66,9 @@ public class Entrega {
     private BigDecimal taxa;
 
     /**
-     * Conta esta anotação o POSTMAN não consegue enviar dados
-     * e os mesmo são SETADOS no service
+     * @JsonProperty(access = Access.READ_ONLY) Com esta anotação o POSTMAN não
+     *                      consegue enviar dados
+     *                      e os mesmo são SETADOS no service
      */
     @JsonProperty(access = Access.READ_ONLY)
     @Column(name = "status")
